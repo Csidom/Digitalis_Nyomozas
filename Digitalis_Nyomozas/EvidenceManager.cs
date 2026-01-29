@@ -8,13 +8,13 @@ namespace Digitalis_Nyomozas
 {
 	internal class EvidenceManager
 	{
-		private List<Evidence>bizonyitekok;
+		private Evidence bizonyitek;
 
-		public EvidenceManager(List<Evidence> bizonyitekok)
+		public EvidenceManager(Evidence bizonyitek)
 		{
-			this.bizonyitekok = bizonyitekok;
+			this.bizonyitek = bizonyitek;
 		}
 
-		internal List<Evidence> Bizonyitekok { get => bizonyitekok; set => bizonyitekok = value; }
+		internal Evidence Bizonyitek { get => bizonyitek; set => bizonyitek = value; }
 	}
 }
