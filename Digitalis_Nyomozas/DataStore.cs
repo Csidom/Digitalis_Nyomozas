@@ -13,15 +13,15 @@ namespace Digitalis_Nyomozas
 		private List<Person> szemelyek;
 		private List<Evidence> bizonyitekok;
 
-		public DataStore(List<User> felhasznalok, List<Case> ugyek, List<Person> szemelyek, List<Evidence> bizonyitekok)
-		{
-			this.felhasznalok = felhasznalok;
-			this.ugyek = ugyek;
-			this.szemelyek = szemelyek;
-			this.bizonyitekok = bizonyitekok;
-		}
+        public DataStore()
+        {
+            Felhasznalok = new List<User>();
+            Ugyek = new List<Case>();
+            Szemelyek = new List<Person>();
+            Bizonyitekok = new List<Evidence>();
+        }
 
-		internal List<User> Felhasznalok { get => felhasznalok; set => felhasznalok = value; }
+        internal List<User> Felhasznalok { get => felhasznalok; set => felhasznalok = value; }
 		internal List<Case> Ugyek { get => ugyek; set => ugyek = value; }
 		internal List<Person> Szemelyek { get => szemelyek; set => szemelyek = value; }
 		internal List<Evidence> Bizonyitekok { get => bizonyitekok; set => bizonyitekok = value; }
