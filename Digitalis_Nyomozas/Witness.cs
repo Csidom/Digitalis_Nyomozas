@@ -10,17 +10,22 @@ namespace Digitalis_Nyomozas
 	{
 		private Person szemely;
 		private string vallomas;
-		private DateTime vallomas_datuma;
+		private DateTime datum;
 
 		public Witness(Person szemely, string vallomas, DateTime vallomas_datuma)
 		{
 			this.szemely = szemely;
 			this.vallomas = vallomas;
-			this.vallomas_datuma = vallomas_datuma;
+			this.datum = vallomas_datuma;
 		}
 
 		public string Vallomas { get => vallomas; set => vallomas = value; }
-		public DateTime Vallomas_datuma { get => vallomas_datuma; set => vallomas_datuma = value; }
+		public DateTime Datum { get => datum; set => datum = value; }
 		internal Person Szemely { get => szemely; set => szemely = value; }
-	}
+
+        public override string ToString()
+        {
+            return $"{this.Szemely.Nev} | Vallomás: {this.Vallomas} | Vallomás dátuma: {this.Datum.ToString("yyyy-MM-dd")}";
+        }
+    }
 }

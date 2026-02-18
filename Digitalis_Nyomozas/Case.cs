@@ -13,7 +13,9 @@ namespace Digitalis_Nyomozas
 		private string leiras;
 		private CaseStatus allapot;
 		private List<Person> szemelyek;
-		private List<Evidence> bizonyitekok;
+        private List<Suspect> gyanusitottak;
+        private List<Witness> tanuk;
+        private List<Evidence> bizonyitekok;
 
 		public Case(string ugy_azonosito, string cim, string leiras)
 		{
@@ -22,6 +24,8 @@ namespace Digitalis_Nyomozas
 			this.leiras = leiras;
 			this.allapot = new CaseStatus(CaseStatus.CaseState.Nyitott);
 			this.szemelyek = new List<Person>();
+			this.gyanusitottak = new List<Suspect>();
+			this.tanuk = new List<Witness>();
 			this.bizonyitekok = new List<Evidence>();
 		}
 
@@ -30,6 +34,8 @@ namespace Digitalis_Nyomozas
 		public string Leiras { get => leiras; set => leiras = value; }
 		public CaseStatus Allapot { get => allapot; set => allapot = value; }
 		public List<Person> Szemelyek { get => szemelyek; set => szemelyek = value; }
+        public List<Suspect> Gyanusitottak { get => gyanusitottak; set => gyanusitottak = value; }
+        public List<Witness> Tanuk { get => tanuk; set => tanuk = value; }
 		public List<Evidence> Bizonyitekok { get => bizonyitekok; set => bizonyitekok = value; }
-	}
+    }
 }

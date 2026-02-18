@@ -22,5 +22,10 @@ namespace Digitalis_Nyomozas
 		public int Gyanu_szint { get => gyanu_szint; set => gyanu_szint = value; }
 		public string Statusz { get => statusz; set => statusz = value; }
 		internal Person Szemely { get => szemely; set => szemely = value; }
-	}
+
+        public override string ToString()
+        {
+            return $"{this.Szemely.Nev} | Gyanú szint: {this.gyanu_szint} | Státusz: {this.statusz}";
+        }
+    }
 }

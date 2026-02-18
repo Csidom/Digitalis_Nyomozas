@@ -22,5 +22,10 @@ namespace Digitalis_Nyomozas
 		public string Nev { get => nev; set => nev = value; }
 		public int Eletkor { get => eletkor; set => eletkor = value; }
 		public string Leiras { get => leiras; set => leiras = value; }
-	}
+
+        public override string ToString()
+        {
+			return $"{this.nev} | {this.eletkor} év | {this.leiras}";
+        }
+    }
 }

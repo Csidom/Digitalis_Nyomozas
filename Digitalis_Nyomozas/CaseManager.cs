@@ -55,29 +55,102 @@ namespace Digitalis_Nyomozas
             {
                 Console.WriteLine("Nincs ilyen ügy.");
                 Console.ReadKey();
-                return;
             }
-
-            Console.WriteLine("1 - Nyitott");
-            Console.WriteLine("2 - Folyamatban");
-            Console.WriteLine("3 - Lezárt");
-
-            int choice = int.Parse(Console.ReadLine());
-
-            switch (choice)
+            else
             {
-                case 1:
-                    selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Nyitott);
-                    break;
-                case 2:
-                    selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Folyamatban);
-                    break;
-                case 3:
-                    selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Lezart);
-                    break;
+                Console.WriteLine("1 - Nyitott");
+                Console.WriteLine("2 - Folyamatban");
+                Console.WriteLine("3 - Lezárt");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Nyitott);
+                        break;
+                    case 2:
+                        selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Folyamatban);
+                        break;
+                    case 3:
+                        selectedCase.Allapot.ChangeStatus(CaseStatus.CaseState.Lezart);
+                        break;
+                }
+                Console.WriteLine("Állapot módosítva.");
+                Console.ReadKey();
             }
 
-            Console.WriteLine("Állapot módosítva.");
+        }
+
+        public void AddSuspect(Case ugy)
+        {
+            Console.Write("Név: ");
+            string nev = Console.ReadLine();
+
+            Console.Write("Életkor: ");
+            int kor = int.Parse(Console.ReadLine());
+
+            Console.Write("Leírás: ");
+            string leiras = Console.ReadLine();
+
+            Console.Write("Gyanú szint: ");
+            int gyanu = int.Parse(Console.ReadLine());
+
+            Console.Write("Státusz: ");
+            string statusz = Console.ReadLine();
+
+            Person p = new Person(nev, kor, leiras);
+            Suspect s = new Suspect(p, gyanu, statusz);
+
+            ugy.Gyanusitottak.Add(s);
+
+            Console.WriteLine("Gyanúsított hozzáadva.");
+            Console.ReadKey();
+        }
+
+        public void AddWitness(Case ugy)
+        {
+            Console.Write("Név: ");
+            string nev = Console.ReadLine();
+
+            Console.Write("Életkor: ");
+            int kor = int.Parse(Console.ReadLine());
+
+            Console.Write("Leírás: ");
+            string leiras = Console.ReadLine();
+
+            Console.Write("Vallomás: ");
+            string vallomas = Console.ReadLine();
+
+            Console.Write("Vallomás dátuma(éééé-hh-nn): ");
+            DateTime datum = DateTime.Parse(Console.ReadLine());
+
+            Person p = new Person(nev, kor, leiras);
+            Witness w = new Witness(p, vallomas, datum);
+
+            ugy.Tanuk.Add(w);
+
+            Console.WriteLine("Tanú hozzáadva.");
+            Console.ReadKey();
+        }
+
+        public void ListPeople(Case ugy)
+        {
+            Console.WriteLine("--- Gyanúsítottak ---");
+            Console.WriteLine();
+            foreach (var s in ugy.Gyanusitottak)
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("--- Tanúk ---");
+            Console.WriteLine();
+            foreach (var t in ugy.Tanuk)
+            {
+                Console.WriteLine(t);
+            }
+            Console.WriteLine();
 
             Console.ReadKey();
         }
