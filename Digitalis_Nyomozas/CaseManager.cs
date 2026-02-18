@@ -93,7 +93,7 @@ namespace Digitalis_Nyomozas
             Console.Write("Leírás: ");
             string leiras = Console.ReadLine();
 
-            Console.Write("Gyanú szint: ");
+            Console.Write("Gyanú szint(1-10): ");
             int gyanu = int.Parse(Console.ReadLine());
 
             Console.Write("Státusz: ");
@@ -136,6 +136,7 @@ namespace Digitalis_Nyomozas
 
         public void ListPeople(Case ugy)
         {
+            Console.WriteLine();
             Console.WriteLine("--- Gyanúsítottak ---");
             Console.WriteLine();
             foreach (var s in ugy.Gyanusitottak)

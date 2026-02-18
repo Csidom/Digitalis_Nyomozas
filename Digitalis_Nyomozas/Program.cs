@@ -8,6 +8,7 @@ namespace Digitalis_Nyomozas
 
         static DataStore datastore = new DataStore();
         static CaseManager caseManager = new CaseManager(datastore);
+        static EvidenceManager evidenceManager = new EvidenceManager();
 
         static void ugykezeles()
         {
@@ -18,8 +19,8 @@ namespace Digitalis_Nyomozas
                 Console.WriteLine("""
                     ---Ügyek kezelése---
 
-                    1. Új ügy hozzáadása
-                    2. Ügyek listázása
+                    1. Ügyek listázása
+                    2. Új ügy hozzáadása
                     3. Ügy állapot módosítása
                     4. Vissza
                     """);
@@ -42,10 +43,10 @@ namespace Digitalis_Nyomozas
                 switch (valasztas)
                 {
                     case 1:
-                        caseManager.CreateCase();
+                        caseManager.ListCases();
                         break;
                     case 2:
-                        caseManager.ListCases();
+                        caseManager.CreateCase();
                         break;
                     case 3:
                         caseManager.ChangeCaseStatus();
@@ -98,9 +99,9 @@ namespace Digitalis_Nyomozas
                                 Console.WriteLine("""
                                     ---Személyek kezelése---
 
-                                    1. Gyanúsított hozzáadása
-                                    2. Tanú hozzáadása
-                                    3. Személyek listázása
+                                    1. Személyek listázása
+                                    2. Gyanúsított hozzáadása
+                                    3. Tanú hozzáadása
                                     4. Másik ügy választása
 
                                     """);
@@ -111,13 +112,13 @@ namespace Digitalis_Nyomozas
                                 switch (choice1)
                                 {
                                     case 1:
-                                        caseManager.AddSuspect(selectedCase);
+                                        caseManager.ListPeople(selectedCase);
                                         break;
                                     case 2:
-                                        caseManager.AddWitness(selectedCase);
+                                        caseManager.AddSuspect(selectedCase);
                                         break;
                                     case 3:
-                                        caseManager.ListPeople(selectedCase);
+                                        caseManager.AddWitness(selectedCase);
                                         break;
                                     case 4:
                                         v = true;
@@ -135,7 +136,78 @@ namespace Digitalis_Nyomozas
 
         static void bizonyitekkezeles()
         {
+            bool vissza = false;
+            while (!vissza)
+            {
+                Console.Clear();
+                Console.WriteLine("""
+                ---Bizonyitékok kezelése---
+                
+                1. Ügy kiválasztása
+                2. Vissza
 
+                """);
+
+                Console.Write("Választás: ");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine();
+                        Console.Write("Adja meg az ügy azonosítóját: ");
+                        string id = Console.ReadLine();
+
+                        Case selectedCase = datastore.Ugyek.FirstOrDefault(c => c.Ugy_azonosito == id);
+
+                        if (selectedCase == null)
+                        {
+                            Console.WriteLine("Nincs ilyen ügy.");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            bool v = false;
+                            while (!v)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("""
+                                    ---Bizonyítékok kezelése---
+
+                                    1. Bizonyítékok listázása
+                                    2. Bizonyíték hozzáadása
+                                    3. Bizonyíték törlése
+                                    4. Másik ügy választása
+
+                                    """);
+                                Console.Write("Választás: ");
+
+                                int choice1 = int.Parse(Console.ReadLine());
+
+                                switch (choice1)
+                                {
+                                    case 1:
+                                        evidenceManager.ListEvidences(selectedCase);
+                                        break;
+                                    case 2:
+                                        evidenceManager.AddEvidence(selectedCase);
+                                        break;
+                                    case 3:
+                                        evidenceManager.DeleteEvidence(selectedCase);
+                                        break;
+                                    case 4:
+                                        v = true;
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    case 2:
+                        vissza = true;
+                        break;
+                }
+            }
         }
 
         static void idovonal()
@@ -148,7 +220,7 @@ namespace Digitalis_Nyomozas
 
         }
 
-        static void kezdadatok()
+        static void kezdoadatok()
         {
             // ----- KEZDŐ ADATOK -----
 
@@ -170,23 +242,33 @@ namespace Digitalis_Nyomozas
             Person p4 = new Person("Szabó Lilla", 31, "Irodai dolgozó.");
             Witness w2 = new Witness(p4, "Gyanús bejelentkezést észleltem.", new DateTime(2026, 6, 2));
 
+            // Bizonyítékok
+            Evidence e1 = new Evidence("E001", "Fotó", "Fekete autó a bank előtt.", 8);
+            Evidence e2 = new Evidence("E002", "Dokumentum", "Rablás során hagyott ujjlenyomat.", 9);
+            Evidence e3 = new Evidence("E003", "Digitális adat", "Hozzáférés log a cég adatbázisában.", 7);
+            Evidence e4 = new Evidence("E004", "Email", "Zsaroló üzenet a CEO-nak.", 6);
+
             // Hozzárendelések
             ugy1.Gyanusitottak.Add(s1);
             ugy1.Tanuk.Add(w1);
+            ugy1.Bizonyitekok.Add(e1);
+            ugy1.Bizonyitekok.Add(e2);
 
             ugy2.Gyanusitottak.Add(s2);
             ugy2.Tanuk.Add(w2);
+            ugy2.Bizonyitekok.Add(e3);
+
+            ugy3.Bizonyitekok.Add(e4);
 
             // Ügyek hozzáadása a datastore-hoz
             datastore.Ugyek.Add(ugy1);
             datastore.Ugyek.Add(ugy2);
             datastore.Ugyek.Add(ugy3);
-
         }
 
         static void Main(string[] args)
         {
-            kezdadatok();
+            kezdoadatok();
 
             bool vege = false;
             while (!vege)
