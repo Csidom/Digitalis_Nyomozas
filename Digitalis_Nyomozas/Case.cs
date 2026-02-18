@@ -16,8 +16,9 @@ namespace Digitalis_Nyomozas
         private List<Suspect> gyanusitottak;
         private List<Witness> tanuk;
         private List<Evidence> bizonyitekok;
+        private List<TimelineEvent> idovonal;
 
-		public Case(string ugy_azonosito, string cim, string leiras)
+        public Case(string ugy_azonosito, string cim, string leiras)
 		{
 			this.ugy_azonosito = ugy_azonosito;
 			this.cim = cim;
@@ -27,7 +28,8 @@ namespace Digitalis_Nyomozas
 			this.gyanusitottak = new List<Suspect>();
 			this.tanuk = new List<Witness>();
 			this.bizonyitekok = new List<Evidence>();
-		}
+            this.idovonal = new List<TimelineEvent>();
+        }
 
 		public string Ugy_azonosito { get => ugy_azonosito; set => ugy_azonosito = value; }
 		public string Cim { get => cim; set => cim = value; }
@@ -37,5 +39,6 @@ namespace Digitalis_Nyomozas
         public List<Suspect> Gyanusitottak { get => gyanusitottak; set => gyanusitottak = value; }
         public List<Witness> Tanuk { get => tanuk; set => tanuk = value; }
 		public List<Evidence> Bizonyitekok { get => bizonyitekok; set => bizonyitekok = value; }
+        public List<TimelineEvent> Idovonal { get => idovonal; set => idovonal = value; }
     }
 }

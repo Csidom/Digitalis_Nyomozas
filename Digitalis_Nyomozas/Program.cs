@@ -212,8 +212,74 @@ namespace Digitalis_Nyomozas
 
         static void idovonal()
         {
-            Console.WriteLine("Nincs itt még semmi...");
-            Console.ReadKey();
+            bool vissza = false;
+
+            while (!vissza)
+            {
+                Console.Clear();
+                Console.WriteLine("""
+                --- Idővonalak kezelése ---
+
+                1. Ügy kiválasztása
+                2. Vissza
+                
+                """);
+                Console.Write("Választás: ");
+
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.WriteLine();
+                        Console.Write("Adja meg az ügy azonosítóját: ");
+                        string id = Console.ReadLine();
+
+                        Case selectedCase = datastore.Ugyek.FirstOrDefault(c => c.Ugy_azonosito == id);
+
+                        if (selectedCase == null)
+                        {
+                            Console.WriteLine("Nincs ilyen ügy.");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            bool v = false;
+                            while (!v)
+                            {
+                                Console.Clear();
+                                Console.WriteLine("""
+                                    --- Idővonal kezelése ---
+
+                                    1. Idővonal megnézése
+                                    2. Esemény hozzáadása
+                                    3. Másik ügy választása
+
+                                    """);
+                                Console.Write("Választás: ");
+
+                                int choice1 = int.Parse(Console.ReadLine());
+
+                                switch (choice1)
+                                {
+                                    case 1:
+                                        caseManager.ListTimeline(selectedCase);
+                                        break;
+                                    case 2:
+                                        caseManager.AddEvent(selectedCase);
+                                        break;
+                                    case 3:
+                                        v = true;
+                                        break;
+                                }
+                            }
+                        }
+                        break;
+                    case 2:
+                        vissza = true;
+                        break;
+                }
+            }
         }
 
         static void elemzes()
@@ -226,43 +292,49 @@ namespace Digitalis_Nyomozas
         {
             // ----- KEZDŐ ADATOK -----
 
+            // --- Ügyek ---
             Case ugy1 = new Case("U001", "Bankrablás", "Ismeretlen elkövető kirabolta a belvárosi bankot.");
             Case ugy2 = new Case("U002", "Adatszivárgás", "Céges adatbázis feltörése történt.");
             Case ugy3 = new Case("U003", "Zsaroló email", "Ismeretlen feladó fenyegető üzenetet küldött.");
 
-            // Gyanúsítottak
+            // --- Gyanúsítottak ---
             Person p1 = new Person("Kovács Béla", 42, "Korábban már büntetett előéletű.");
             Suspect s1 = new Suspect(p1, 65, "Megfigyelt");
 
             Person p2 = new Person("Nagy Anna", 29, "Volt alkalmazott.");
             Suspect s2 = new Suspect(p2, 40, "Szabad");
 
-            // Tanúk
+            // --- Tanúk ---
             Person p3 = new Person("Tóth Gábor", 35, "Szemtanú.");
             Witness w1 = new Witness(p3, "Láttam egy fekete autót a bank előtt.", new DateTime(2026, 5, 12));
 
             Person p4 = new Person("Szabó Lilla", 31, "Irodai dolgozó.");
             Witness w2 = new Witness(p4, "Gyanús bejelentkezést észleltem.", new DateTime(2026, 6, 2));
 
-            // Bizonyítékok
-            Evidence e1 = new Evidence("E001", "Fotó", "Fekete autó a bank előtt.", 8);
-            Evidence e2 = new Evidence("E002", "Dokumentum", "Rablás során hagyott ujjlenyomat.", 9);
-            Evidence e3 = new Evidence("E003", "Digitális adat", "Hozzáférés log a cég adatbázisában.", 7);
-            Evidence e4 = new Evidence("E004", "Email", "Zsaroló üzenet a CEO-nak.", 6);
+            // --- Bizonyítékok ---
+            Evidence e1 = new Evidence("B001", "Fénykép", "Kamerafelvétel a bankról.", 9);
+            Evidence e2 = new Evidence("B002", "Ujjlenyomat", "Ujjlenyomat az ajtón.", 8);
+            Evidence e3 = new Evidence("B003", "Email", "Rosszindulatú e-mail header.", 7);
 
-            // Hozzárendelések
+            // --- Idővonal események ---
+            TimelineEvent t1 = new TimelineEvent(new DateTime(2026, 5, 12), "Rablás megtörtént a belvárosi banknál.");
+            TimelineEvent t2 = new TimelineEvent(new DateTime(2026, 5, 13), "Tanú vallomást tett.");
+            TimelineEvent t3 = new TimelineEvent(new DateTime(2026, 6, 2), "Bizonyítékok összegyűjtve és elemzve.");
+
+            // --- Hozzárendelések ---
             ugy1.Gyanusitottak.Add(s1);
             ugy1.Tanuk.Add(w1);
             ugy1.Bizonyitekok.Add(e1);
             ugy1.Bizonyitekok.Add(e2);
+            ugy1.Idovonal.Add(t1);
+            ugy1.Idovonal.Add(t2);
 
             ugy2.Gyanusitottak.Add(s2);
             ugy2.Tanuk.Add(w2);
             ugy2.Bizonyitekok.Add(e3);
+            ugy2.Idovonal.Add(t3);
 
-            ugy3.Bizonyitekok.Add(e4);
-
-            // Ügyek hozzáadása a datastore-hoz
+            // --- Ügyek hozzáadása a datastore-hoz ---
             datastore.Ugyek.Add(ugy1);
             datastore.Ugyek.Add(ugy2);
             datastore.Ugyek.Add(ugy3);
@@ -280,11 +352,11 @@ namespace Digitalis_Nyomozas
 
                     Digitális Nyomozó
 
-                        ---Menü---
+                    --- Menü ---
                     1. Ügyek kezelése
                     2. Személyek kezelése
                     3. Bizonyítékok kezelése
-                    4. Idővonal megtekintése
+                    4. Idővonalak kezelése
                     5. Elemzés/döntések
                     6. Kilépés
 

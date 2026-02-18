@@ -82,6 +82,27 @@ namespace Digitalis_Nyomozas
 
         }
 
+        public void ListPeople(Case ugy)
+        {
+            Console.WriteLine();
+            Console.WriteLine("--- Gyanúsítottak ---");
+            Console.WriteLine();
+            foreach (var s in ugy.Gyanusitottak)
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("--- Tanúk ---");
+            Console.WriteLine();
+            foreach (var t in ugy.Tanuk)
+            {
+                Console.WriteLine(t);
+            }
+            Console.WriteLine();
+
+            Console.ReadKey();
+        }
         public void AddSuspect(Case ugy)
         {
             Console.Write("Név: ");
@@ -107,7 +128,6 @@ namespace Digitalis_Nyomozas
             Console.WriteLine("Gyanúsított hozzáadva.");
             Console.ReadKey();
         }
-
         public void AddWitness(Case ugy)
         {
             Console.Write("Név: ");
@@ -134,25 +154,33 @@ namespace Digitalis_Nyomozas
             Console.ReadKey();
         }
 
-        public void ListPeople(Case ugy)
+
+        public void ListTimeline(Case ugy)
         {
             Console.WriteLine();
-            Console.WriteLine("--- Gyanúsítottak ---");
+            Console.WriteLine("--- Események ---");
             Console.WriteLine();
-            foreach (var s in ugy.Gyanusitottak)
+            foreach (var e in ugy.Idovonal)
             {
-                Console.WriteLine(s);
+                Console.WriteLine(e);
             }
             Console.WriteLine();
+            Console.ReadKey();
+        }
+        public void AddEvent(Case ugy)
+        {
+            Console.Write("Esemény dátuma(éééé-hh-nn): ");
+            DateTime datum = DateTime.Parse(Console.ReadLine());
 
-            Console.WriteLine("--- Tanúk ---");
-            Console.WriteLine();
-            foreach (var t in ugy.Tanuk)
-            {
-                Console.WriteLine(t);
-            }
-            Console.WriteLine();
+            Console.Write("Leírás: ");
+            string leiras = Console.ReadLine();
 
+
+            TimelineEvent e = new TimelineEvent(datum, leiras);
+
+            ugy.Idovonal.Add(e);
+
+            Console.WriteLine("Esemény hozzáadva.");
             Console.ReadKey();
         }
     }

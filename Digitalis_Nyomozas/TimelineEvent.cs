@@ -19,5 +19,10 @@ namespace Digitalis_Nyomozas
 
 		public DateTime Datum { get => datum; set => datum = value; }
 		public string Esemeny_leiras { get => esemeny_leiras; set => esemeny_leiras = value; }
-	}
+
+        public override string ToString()
+        {
+            return $"Dátum: {datum.ToString("yyyy-MM-dd")} | Leírás: {esemeny_leiras}";
+        }
+    }
 }
