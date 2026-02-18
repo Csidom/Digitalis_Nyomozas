@@ -212,12 +212,14 @@ namespace Digitalis_Nyomozas
 
         static void idovonal()
         {
-
+            Console.WriteLine("Nincs itt még semmi...");
+            Console.ReadKey();
         }
 
         static void elemzes()
         {
-
+            Console.WriteLine("Nincs itt még semmi...");
+            Console.ReadKey();
         }
 
         static void kezdoadatok()
